@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- URL에 따라 해당하는 컨트롤러에 매핑  -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<!-- key 값은 인터넷에서 접속할 때의 주소 뒷부분 / prop 태그 사이에 쓰는 내용은 id 값 -->
+				<prop key="/home">home</prop>  <!-- map.put("/home",home); -->
+				<prop key="/input.do">input</prop>
+				<prop key="/inputProc.do">inputProc</prop>
+				<prop key="/output.do">outputProc</prop>
+				<prop key="/delete.do">deleteProc</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 위에 작성된 id 값에 따라서 보내는 컨트롤러 설정 -->
+	<bean id="home" class="kh.spring.project.HomeController"></bean>  <!-- HomeController home = new HomeController(); -->
+	<bean id="input" class="kh.spring.project.InputController"></bean>
+	<bean id="inputProc" class="kh.spring.project.InputProcController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="outputProc" class="kh.spring.project.OutputProcController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="deleteProc" class="kh.spring.project.DeleteProcController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	
+	<bean id="dao" class="kh.spring.dao.DAO">
+		<constructor-arg ref="dataSource"></constructor-arg>  <!-- constructor injection -->
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>  <!-- setter injection -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="kh"></property>
+		<property name="password" value="kh"></property>
+		<property name="initialSize" value="30"></property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+</beans>

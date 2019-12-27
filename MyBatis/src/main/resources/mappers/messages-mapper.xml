@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Messages">
+	<insert id="insert" parameterType="java.util.Map">
+		insert into messages values(messages_seq.nextval,#{name},#{msg},sysdate)
+	</insert>
+	
+	<select id="selectAll" resultType="kh.spring.dto.MessagesDTO">
+		select * from messages
+	</select>
+	
+	<!-- 싱글쿼테이션 쓰는법 #대신 $ -->
+	<delete id="delete" parameterType="java.util.Map">
+		delete from messages where ${col} = #{val}
+	</delete>
+	
+	<!-- 검색 조건이 다수인 경우 -->
+	<select id="selectDyn1" resultType="kh.spring.dto.MessagesDTO">
+		select * from messages
+		<if test="name != null">
+			where name = #{name}
+		</if>
+		<if test="msg != null">
+			and msg = #{msg}
+		</if>
+		<if test="title != null">
+			and title = #{title}
+		</if>
+	</select>
+	
+	<!-- 검색 조건이 단일 조건인 경우 -->
+	<select id="selectDyn2" resultType="kh.spring.dto.MessagesDTO">
+		select * from messages
+		<choose>
+			<when test="name != null">
+				where name = #{name}
+			</when>
+			<when test="msg != null">
+				where msg = #{msg}
+			</when>
+			<when test="title != null">
+				where title = #{title}
+			</when>
+		</choose>
+	</select>
+	
+	<select id="selectDyn3" resultType="kh.spring.dto.MessagesDTO">
+		select * from messages
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="name != null">
+				name = #{name}
+			</if>
+			<if test="msg != null">
+				and msg = #{msg}
+			</if>
+			<if test="title != null">
+				and title = #{title}
+			</if>
+		</trim>
+	</select>
+	
+</mapper>
