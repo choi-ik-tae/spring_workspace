@@ -101,7 +101,7 @@
         	"launch":"./App_Desktop.xadl.js",
         	"quickview":"./App_Desktop.xadl.quickview.js",
         	"form":[
-        				"./Base/Frm01.xfdl.js"
+        				"./Base/FrmIndex.xfdl.js"
         	]
         }
         ],  

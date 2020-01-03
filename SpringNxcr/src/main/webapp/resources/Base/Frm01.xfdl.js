@@ -83,7 +83,6 @@
         	this.Dataset00.setColumn(row, "writer",writer)
         	this.Dataset00.setColumn(row, "message",message);
 
-
         	var svcID = "insertSvc";
         	var svcURL = "/nxcr/insert.do";
         	var inDataset = "paramDS=Dataset00";
