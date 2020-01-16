@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kh.spring</groupId>
 	<artifactId>project</artifactId>
-	<name>Test0109</name>
+	<name>deployExam</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -93,8 +93,8 @@
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -111,19 +111,25 @@
 	
 		<!-- Test -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>        
 	</dependencies>
     <build>
         <plugins>
+        	<plugin>
+        		<groupId>org.apache.tomcat.maven</groupId>
+        		<artifactId>tomcat7-maven-plugin</artifactId>
+        		<version>2.2</version>
+        		<configuration>
+        			<url>http://localhost:8899/manager/text</url>
+        			<username>admin</username>
+        			<password>admin</password>
+        			<path>/deployExam</path>
+        		</configuration>
+        	</plugin>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.9</version>
